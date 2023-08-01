@@ -1,0 +1,72 @@
+SELECT 
+        --id AS [id_registro],
+        codigo AS [codigo_proyecto],
+        Nombre AS [nombre_proyecto],
+        --Tabsubdiv.codigo_division,
+        --Tabsubdiv.nombre_division,
+        --Tabsubdiv.subdivision_padre,
+        Tabsubdiv.codigo_etapa,
+
+        CASE
+                WHEN codigo = 'ANG' OR  codigo = 'ELESCOLA' OR codigo = 'DOR' OR codigo = 'PVIEJO5' OR codigo = 'SAL' OR codigo = 'CSA' OR codigo = 'PVIEJO4' THEN 'activo'
+                WHEN codigo = 'ROSARIO' THEN 'Proyecto'
+                ELSE 'cerrado'
+        END AS estado_proyecto,
+
+        CASE
+                WHEN codigo_etapa = 'MAR-A' OR codigo_etapa = 'DOR-A' THEN 'activo'
+                ELSE 'inactivo'
+        END AS estado_etapa
+
+        --CASE
+        --        WHEN codigo = 'ELESCOLA' THEN DATE '2023-03-01'
+        --        WHEN codigo = 'DOR' THEN DATE '2023-04-01'
+        --        WHEN codigo = 'PVIEJO5' THEN DATE '2023-08-01'
+        --        WHEN codigo = 'PVIEJO2' THEN DATE '2023-06-01'
+        --        WHEN codigo = 'PVIEJO3' THEN DATE '2023-05-01'
+        --        WHEN codigo = 'SAL' THEN DATE '2023-07-01'
+        --        WHEN codigo = 'CSA' THEN DATE '2023-02-01'
+        --        WHEN codigo = 'PVIEJO4' THEN DATE '2023-01-01'
+        --        ELSE DATE '2000-01-01'
+        --END AS id_orden_cronologico,
+
+        --direccion AS [direccion],
+        --fecha_estimacion,
+        --fecha_real,
+        --latitud,
+        --longitud,
+        --pais,
+        --departamento,
+        --provincia,
+        --distrito,
+        --tipo_proyecto,
+        --estado_construccion,
+        --total_unidades,
+        --unidades_vendidas,
+        --moneda AS [codigo_moneda],
+        --tasa_interes_mensual,
+        --banco_promotor,
+        --fecha_inicio_venta,
+        --fecha_actualizacion
+FROM desarrolladora.proyectos
+--ORDER BY id_orden_cronologico
+
+INNER JOIN (
+
+    SELECT DISTINCT
+        proyecto_codigo,
+        --codigo AS [codigo_division],
+        --subdivision.nombre AS [nombre_division],
+        --subdivision_padre,
+        CASE
+            WHEN subdivision_padre IS NULL THEN codigo
+            ELSE subdivision_padre
+        END AS codigo_etapa
+
+FROM desarrolladora.subdivision
+
+) AS Tabsubdiv
+
+ON codigo = Tabsubdiv.proyecto_codigo
+
+
