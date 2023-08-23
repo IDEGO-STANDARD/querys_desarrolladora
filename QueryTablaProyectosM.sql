@@ -23,7 +23,6 @@
    -- unidades_2
         --objetivo: cantidad de unidades con tipo unidad igual a deposito, closet y
                     estacionamiento.
-   
 */
 
 SELECT 

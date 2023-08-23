@@ -1,3 +1,30 @@
+/* 
+   Creado por: Nicolas Figueroa Gómez
+   Nombre tabla: NTD_ProyectosM
+   Objetivo: Obtener los datos generales de los proyectos y otros datos como la tasa de cambio del proyecto, factor de descuento del proyecto, tipo de proyecto,
+   entre otros.
+   Campos modificados: 
+   -- estado:
+        --objetivo: De acuerdo de codigo de proyecto, se agrupo por estado activo e inactivo.
+   -- id_orden_cronologico:
+        --objetivo: Se establece una fecha de acuerdo a la antiguedad del proyecto. Esto con
+                    el fin de organizarlo en un grafico en power bi por orden de cronológico.
+   -- tc_usd:
+        --objetivo: tasa de cambio del proyecto.
+   -- fac_desc_proyecc:
+        --objetivo: factor de descuento por proyecto.
+   -- tipo_vivienda
+        --objetivo: tipo vivienda del proyecto. Este se clasifica en ...
+   -- tipo_proyecto
+        --objetivo: tipo de proyecto. Este se clasifica en ...
+   -- unidades_1
+        --objetivo: cantidad de unidades con tipo unidad igual a casa, departamento, local
+                    comercial, oficina, penthouse, restaurante.
+   -- unidades_2
+        --objetivo: cantidad de unidades con tipo unidad igual a deposito, closet y
+                    estacionamiento.
+*/
+
 SELECT
 
     unidades.codigo AS codigo_unidad,

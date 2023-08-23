@@ -1,4 +1,6 @@
-/* Nombre tabla: NTD_Etapa
+/* 
+   Creado por: Nicolas Figueroa Gómez
+   Nombre tabla: NTD_Etapa
    Objetivo: Tener el codigo de etapa por prouecto, asi como su estado.
    
    Campos modificados: 
@@ -9,8 +11,6 @@
                     En dicha tabla, para la creacion del campo codigo_etapa se siguio la siguiente logica. Si en la tabla sub-
                     division el proyecto no tiene subdivision padre utilizara como valor el codigo, caso contrario si tiene
                     utilizara como valor subdivision padre.
-                    
-   Creado por: Nicolas Figueroa Gómez
 */
 
 SELECT 

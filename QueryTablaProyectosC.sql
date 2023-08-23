@@ -1,4 +1,6 @@
-/* Nombre tabla: NTD_ProyectosC
+/* 
+   Creado por: Nicolas Figueroa Gómez
+   Nombre tabla: NTD_ProyectosC
    Objetivo: Obtener los datos generales de los proyectos, unidades disponibles, entre otros.
    Campos modificados: 
    -- valor_venta_usd:
@@ -26,9 +28,7 @@
    -- velocidad_venta
         --objetivo: velocidad de venta del proyecto establecida. 
    -- numero_clientes_proformados
-        --objetivo: numero de clientes proformados por proyecto.
-   
-   Creado por: Nicolas Figueroa Gómez
+        --objetivo: numero de clientes proformados por proyecto. 
 */
 
 SELECT 

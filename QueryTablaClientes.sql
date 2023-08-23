@@ -1,4 +1,6 @@
-/* Nombre tabla: NTD_Clientes
+/* 
+   Creado por: Nicolas Figueroa Gómez
+   Nombre tabla: NTD_Clientes
    Objetivo: Tener los datos generales de los clientes a los ultimos proyectos asignados. 
    Campos modificados: 
    -- agrupacion_medio_captacion:
@@ -9,7 +11,6 @@
         --objetivo: Se utiliza la funcion EXTRACT, para extraer el año de fecha_ultima_interaccion.
    -- anio_creacion:
         --objetivo: Se utiliza la funcion EXTRACT para extraer el año de fecha_creacion.
-   Creado por: Nicolas Figueroa Gómez
 */
 
 

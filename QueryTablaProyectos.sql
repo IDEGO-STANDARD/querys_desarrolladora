@@ -1,4 +1,6 @@
-/* Nombre tabla: NTD_Proyectos
+/* 
+   Creado por: Nicolas Figueroa Gómez
+   Nombre tabla: NTD_Proyectos
    Objetivo: Obtener los datos generales de los proyectos.
    Campos modificados: 
    -- estado:
@@ -6,8 +8,6 @@
    -- id_orden_cronologico:
         --objetivo: Se establece una fecha de acuerdo a la antiguedad del proyecto. Esto con
                     el fin de organizarlo en un grafico en power bi por orden de cronológico.
-   
-   Creado por: Nicolas Figueroa Gómez
 */
 
 SELECT 
