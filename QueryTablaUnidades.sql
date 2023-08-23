@@ -4,25 +4,29 @@
    Objetivo: Obtener los datos generales de los proyectos y otros datos como la tasa de cambio del proyecto, factor de descuento del proyecto, tipo de proyecto,
    entre otros.
    Campos modificados: 
-   -- estado:
+   -- precio_lista_S:
         --objetivo: De acuerdo de codigo de proyecto, se agrupo por estado activo e inactivo.
-   -- id_orden_cronologico:
+   -- precio_lista_$:
         --objetivo: Se establece una fecha de acuerdo a la antiguedad del proyecto. Esto con
                     el fin de organizarlo en un grafico en power bi por orden de cronológico.
-   -- tc_usd:
+   -- precio_venta_S:
         --objetivo: tasa de cambio del proyecto.
-   -- fac_desc_proyecc:
+   -- precio_venta_$:
         --objetivo: factor de descuento por proyecto.
-   -- tipo_vivienda
+   -- descuento_venta_S
         --objetivo: tipo vivienda del proyecto. Este se clasifica en ...
-   -- tipo_proyecto
+   -- descuento_venta_$
         --objetivo: tipo de proyecto. Este se clasifica en ...
-   -- unidades_1
+   -- precio_m2_S
         --objetivo: cantidad de unidades con tipo unidad igual a casa, departamento, local
                     comercial, oficina, penthouse, restaurante.
-   -- unidades_2
+   -- precio_m2_$
         --objetivo: cantidad de unidades con tipo unidad igual a deposito, closet y
                     estacionamiento.
+   -- precio_base_proforma_S
+        --objetivo: 
+   -- precio_base_proforma_$
+        --objetivo: 
 */
 
 SELECT
@@ -37,11 +41,6 @@ SELECT
     unidades.area_techada,
     unidades.area_total,
     unidades.estado_comercial,
-    --unidades.precio_lista,
-    --unidades.precio_base_proforma,
-    --unidades.descuento_venta,
-    --unidades.precio_venta,
-    --unidades.precio_m2,
     unidades.fecha_precio_actualizado,
     unidades.moneda_precio_lista,
     unidades.moneda_venta,
