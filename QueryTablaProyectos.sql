@@ -1,3 +1,15 @@
+/* Nombre tabla: NTD_Proyectos
+   Objetivo: Obtener los datos generales de los proyectos.
+   Campos modificados: 
+   -- estado:
+        --objetivo: De acuerdo de codigo de proyecto, se agrupo por estado activo e inactivo.
+   -- id_orden_cronologico:
+        --objetivo: Se establece una fecha de acuerdo a la antiguedad del proyecto. Esto con
+                    el fin de organizarlo en un grafico en power bi por orden de cronológico.
+   
+   Creado por: Nicolas Figueroa Gómez
+*/
+
 SELECT 
 id AS [id_registro],
 codigo AS [codigo_proyecto],
