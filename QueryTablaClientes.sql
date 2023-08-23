@@ -1,3 +1,18 @@
+/* Nombre tabla: NTD_Clientes
+   Objetivo: Tener los datos generales de los clientes a los ultimos proyectos asignados. 
+   Campos modificados: 
+   -- agrupacion_medio_captacion:
+        --objetivo: Estandarización del medio de captacion, esta se clasifica en Portales Inmobiliarios, Leads digitales, Leads tradicionales y Otros.
+   -- mivel_interes:
+        --objetivo: Estandarización del nivel de interes, esta se clasifica en De baja, evaluando compra, seguimiento, interesado, Potencial, Separación, Vendido y NN
+   -- anio_ultinteraccion:
+        --objetivo: Se utiliza la funcion EXTRACT, para extraer el año de fecha_ultima_interaccion.
+   -- anio_creacion:
+        --objetivo: Se utiliza la funcion EXTRACT para extraer el año de fecha_creacion.
+   Creado por: Nicolas Figueroa Gómez
+*/
+
+
 SELECT 
         fecha_creacion,
         nombres,
@@ -9,8 +24,7 @@ SELECT
         email,
         telefono,
         celulares as celular,
-        --Estandarizar agrupacion medio captacion
-        --agrupacion_medio_captacion,
+       
         CASE
                 WHEN LOWER(agrupacion_medio_captacion) LIKE '%facebook%' OR LOWER(agrupacion_medio_captacion) LIKE '%Página%'
                 OR LOWER(agrupacion_medio_captacion) = 'Portales Inmobiliarios' OR LOWER(agrupacion_medio_captacion) LIKE '%web%' 
@@ -20,13 +34,8 @@ SELECT
                 OR agrupacion_medio_captacion = 'Volanteo' OR agrupacion_medio_captacion = 'Activaciones' THEN 'Leads tradicionales'
                 ELSE 'Otros'
         END AS agrupacion_medio_captacion,
-        --Estandarizar medio captacion
         medio_captacion,
-        --Estandarizar canal de entrada
         canal_entrada,
-
-        --Estandarizar nivel de interes
-        --nivel_interes,
         CASE
                 WHEN LOWER(nivel_interes) LIKE '%de baja%' OR  LOWER(nivel_interes) = 'no contesta' THEN 'De Baja'
                 WHEN LOWER(nivel_interes) = 'derivado a ejecutivo' OR LOWER(nivel_interes) = 'en espera' OR LOWER(nivel_interes) = 'evaluando compra'
