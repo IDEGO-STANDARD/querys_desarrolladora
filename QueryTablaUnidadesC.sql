@@ -1,3 +1,33 @@
+/* 
+   Creado por: Nicolas Figueroa Gómez
+   Nombre tabla: NTD_UnidadesC
+   Objetivo: Obtener datos de las unidades como son los precios, numero de proformas, entre otros.
+   Campos modificados: 
+
+   -- precio_lista_S:
+        --objetivo: 
+   -- precio_lista_$:
+        --objetivo: 
+   -- precio_venta_S:
+        --objetivo: 
+   -- precio_venta_$:
+        --objetivo: 
+   -- descuento_venta_S
+        --objetivo: 
+   -- descuento_venta_$
+        --objetivo: 
+   -- precio_m2_S
+        --objetivo: 
+   -- precio_m2_$
+        --objetivo: 
+   -- precio_base_proforma_S
+        --objetivo: 
+   -- precio_base_proforma_$
+        --objetivo: 
+   -- nro_proformas
+        --objetivo: 
+*/
+
 
 SELECT
 
@@ -5,66 +35,46 @@ SELECT
     Tab1.codigo_proyecto,
     Tab1.codigo_proforma,
     Tab1.tipo_unidad,
-    --Tab1.estado_construccion,
     Tab1.nombre_tipologia,
     Tab1.area_libre,
     Tab1.area_techada,
     Tab1.area_total,
     Tab1.estado_comercial,
-    --Tab1.precio_lista,
-    --Tab1.precio_base_proforma,
-    --Tab1.descuento_venta,
-    --Tab1.precio_venta,
-    --Tab1.precio_m2,
     Tab1.fecha_precio_actualizado,
     Tab1.moneda_precio_lista,
     Tab1.moneda_venta,
     Tab1.fecha_separacion,
-
     Tab1.fecha_reserva,
     Tab1.fecha_venta,
     Tab1.fecha_entrega,
     Tab1.fecha_inicio_independizacion,
     Tab1.fecha_fin_independizacion,
     Tab1.modalidad_contrato,
-
     Tab1.precio_lista_S,
     Tab1.precio_lista_$,
-
     Tab1.precio_venta_S,
     Tab1.precio_venta_$,
-
     Tab1.descuento_venta_S,
     Tab1.descuento_venta_$,
-
     Tab1.precio_m2_S,
     Tab1.precio_m2_$,
-
     Tab1.precio_base_proforma_S,
     Tab1.precio_base_proforma_$,
 
     Tab2.nro_proformas
 
     FROM (
-
-
         SELECT
 
                 unidades.codigo AS codigo_unidad,
                 unidades.codigo_proyecto,
                 unidades.codigo_proforma,
                 unidades.tipo_unidad,
-                --unidades.estado_construccion,
                 unidades.nombre_tipologia,
                 unidades.area_libre,
                 unidades.area_techada,
                 unidades.area_total,
                 unidades.estado_comercial,
-                --unidades.precio_lista,
-                --unidades.precio_base_proforma,
-                --unidades.descuento_venta,
-                --unidades.precio_venta,
-                --unidades.precio_m2,
                 unidades.fecha_precio_actualizado,
                 unidades.moneda_precio_lista,
                 unidades.moneda_venta,
@@ -137,5 +147,4 @@ INNER JOIN (
 
 ) AS Tab2
 
---unidades.precio_promedio_proformado,
 ON Tab1.codigo_unidad = Tab2.codigo_unidad

@@ -1,8 +1,7 @@
 /* 
    Creado por: Nicolas Figueroa Gómez
-   Nombre tabla: NTD_ProyectosM
-   Objetivo: Obtener los datos generales de los proyectos y otros datos como la tasa de cambio del proyecto, factor de descuento del proyecto, tipo de proyecto,
-   entre otros.
+   Nombre tabla: NTD_Unidades
+   Objetivo: Obtener los datos generales de las unidades.
    Campos modificados: 
    -- precio_lista_S:
         --objetivo: De acuerdo de codigo de proyecto, se agrupo por estado activo e inactivo.
@@ -24,9 +23,9 @@
         --objetivo: cantidad de unidades con tipo unidad igual a deposito, closet y
                     estacionamiento.
    -- precio_base_proforma_S
-        --objetivo: 
+        --objetivo: precio base del proyecto dado en la proforma en soles.
    -- precio_base_proforma_$
-        --objetivo: 
+        --objetivo: precio base de la unidad dado en la proforma en dolares, utilizando 3.80 como valor de cambio.
 */
 
 SELECT
