@@ -53,9 +53,9 @@ CASE
 END AS tc_usd,
 
 CASE
-        WHEN codigo = 'ANG' OR  codigo = 'ELESCOLA' OR codigo = 'DOR' OR codigo = 'PVIEJO5' OR codigo = 'SAL' OR codigo = 'CSA' OR codigo = 'PVIEJO4' THEN 'Falta arreglar este campo'
+        WHEN codigo = 'ANG' OR  codigo = 'ELESCOLA' OR codigo = 'DOR' OR codigo = 'PVIEJO5' OR codigo = 'SAL' OR codigo = 'CSA' OR codigo = 'PVIEJO4' THEN 0.10
         --WHEN codigo = 'ROSARIO' THEN 'Proyecto'
-        ELSE 'Falta arreglar este campo'
+        ELSE 0
 END AS fac_desc_proyecc,
 
 CASE

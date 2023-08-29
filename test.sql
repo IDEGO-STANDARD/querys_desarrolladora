@@ -2,6 +2,7 @@ SELECT
 
         TabProcesos.codigo_proyecto,
         TabProcesos.codigo_proforma AS codigo_proforma,
+        --TabProforma_unidad.codigo_proforma AS codigo_proforma_unidad,
         TabProcesos.tipo_unidad_principal,
         TabProcesos.codigo_unidad,
         TabProcesos.total_unidades,
@@ -53,11 +54,6 @@ SELECT
         --total_pagado,
         --TabProcesos.total_pendiente,
         --estado_contrato,
-
-
-        TabProcesos.total_pagado,
-        TabProcesos.total_pendiente,
-
         TabProcesos.fecha_reserva, 
         TabProcesos.fecha_aprobacion, 
         TabProcesos.fecha_separacion, 
@@ -96,13 +92,6 @@ FROM (
         TabL.precio_base_proforma,
         TabL.descuento_venta,
         TabL.precio_venta,
-
-        TabL.total_pagado,
-        TabL.total_pendiente,
-
-
-
-
         TabL.fecha_reserva, 
         TabL.fecha_aprobacion, 
         TabL.fecha_separacion, 
@@ -136,10 +125,6 @@ SELECT
     TabPivot.precio_base_proforma,
     TabPivot.descuento_venta,
     TabPivot.precio_venta,
-
-    TabPivot.total_pagado,
-    TabPivot.total_pendiente,
-
     fecha_reserva, 
     fecha_aprobacion, 
     fecha_separacion, 
@@ -187,19 +172,13 @@ SELECT
     [Entrega]  AS fecha_entrega, 
     [Anulacion] AS fecha_anulacion,
 
-    --PivotTable.total_pagado,
-    --PivotTable.total_pendiente,
-
     DATEPART(day, Venta) AS dias_venta,
     DATEPART(day, EscrituraPública) AS dias_escriturapublica,
     CASE
             WHEN ( fecha_venta::date - EscrituraPública::date ) < 0 THEN ( fecha_venta::date - EscrituraPública::date ) * -1
             WHEN  fecha_venta::date IS NULL OR EscrituraPública::date IS NULL THEN 0
             ELSE (fecha_venta::date - EscrituraPública::date)
-    END AS diferencia_dias_entre_venta_escriturapublica,
-
-    ultimo_total_pagado.total_pagado,
-    ultimo_total_pendiente.total_pendiente
+    END AS diferencia_dias_entre_venta_escriturapublica
         
 FROM (
     SELECT
@@ -219,10 +198,6 @@ FROM (
         procesos.precio_base_proforma,
         procesos.descuento_venta,
         procesos.precio_venta,
-
-        --procesos.total_pagado,
-        --procesos.total_pendiente,
-
         procesos.fecha_fin,
         procesos.fecha_inicio,
         procesos.fecha_anulacion,
@@ -243,41 +218,11 @@ PIVOT
             WHEN estado_proceso = 'Separacion' THEN fecha_inicio
             WHEN estado_proceso = 'Anulacion' THEN fecha_anulacion
             ELSE fecha_fin
-        END) 
-
+        END)
     FOR estado_proceso IN ('Reserva', 'Aprobacion', 'Separacion', 'Venta', 'EscrituraPública', 'Entrega', 'Anulacion')
 ) AS PivotTable
 
-
-LEFT JOIN (
-    SELECT 
-           procesos.codigo_proyecto,
-           procesos.codigo_unidad,
-           procesos.codigo_proforma,
-           MAX(total_pagado) AS total_pagado
-    FROM desarrolladora.procesos
-    GROUP BY procesos.codigo_proyecto, procesos.codigo_unidad, procesos.codigo_proforma
-) AS ultimo_total_pagado 
-ON PivotTable.codigo_proyecto = ultimo_total_pagado.codigo_proyecto
-AND PivotTable.codigo_unidad = ultimo_total_pagado.codigo_unidad
-AND PivotTable.codigo_proforma = ultimo_total_pagado.codigo_proforma
-
-LEFT JOIN (
-    SELECT 
-           procesos.codigo_proyecto,
-           procesos.codigo_unidad,
-           procesos.codigo_proforma,
-           MAX(total_pendiente) AS total_pendiente
-    FROM desarrolladora.procesos
-    GROUP BY procesos.codigo_proyecto, procesos.codigo_unidad, procesos.codigo_proforma
-) AS ultimo_total_pendiente 
-
-ON PivotTable.codigo_proyecto = ultimo_total_pendiente.codigo_proyecto
-AND PivotTable.codigo_unidad = ultimo_total_pendiente.codigo_unidad
-AND PivotTable.codigo_proforma = ultimo_total_pendiente.codigo_proforma
-
 ) AS TabPivot
-
 
 LEFT JOIN ( 
 

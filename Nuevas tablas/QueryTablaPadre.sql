@@ -10,6 +10,7 @@
 SELECT 
     
     --area azul
+    Tabu.codigo_unidad,      
     dpto,
     area_techada,
     area_libre,
@@ -30,13 +31,13 @@ SELECT
     pisoh,
     particularh,
 
-    precio_base_proforma * (dormh + tipoh + pisoh) AS p_unit_ajustado_techada,
+    precio_base_proforma_$ * (dormh + tipoh + pisoh) AS p_unit_ajustado_techada,
+
     (precio_base_proforma * (dormh + tipoh + pisoh) ) * 0.5 AS p_unit_ajustado_libre,
 
 
-
     CASE 
-        WHEN area_ajustada = 0 THEN 0
+        WHEN area_ajustada = 0  THEN 0
         ELSE (CEIL(((area_techada * (precio_base_proforma * (dormh + tipoh + pisoh))) + (area_ajustada * (precio_base_proforma * (dormh + tipoh + pisoh)))) / 5) * 5) / area_ajustada
     END AS p_unit_total,
 
@@ -64,12 +65,9 @@ SELECT
 
     Tabpro.cantidad_proformas,
 
-    descuento_maximo_ejecutivo,
+    (precio_lista_$ * 0.95) AS descuento_maximo_ejecutivo,
     
     --(CEIL(((area_techada * (precio_base_proforma * (dormh + tipoh + pisoh))) + (area_ajustada * (precio_base_proforma * (dormh + tipoh + pisoh)))) / 5) * 5) / area_ajustada AS p_unit_total
-
-
-
     --(area_techada * (precio_base_proforma * (dormh + tipoh + pisoh)))
     --(area_ajustada * (precio_base_proforma * (dormh + tipoh + pisoh)))
 
@@ -80,7 +78,8 @@ SELECT
 
 FROM (
     SELECT
-            unidades.codigo AS dpto,
+            unidades.codigo AS codigo_unidad,
+            unidades.nombre AS dpto,
             unidades.area_techada,
             unidades.area_libre,
             unidades.area_total,
@@ -136,8 +135,6 @@ FROM (
             (NULL) AS particularh,
 
             unidades.precio_base_proforma,
-
-            unidades.codigo AS codigo_unidad,
             unidades.codigo_proyecto,
             unidades.tipo_unidad,
             unidades.nombre_tipologia,
@@ -156,6 +153,11 @@ FROM (
                 ELSE unidades.precio_lista
             END AS precio_lista_$,
 
+
+            CASE
+                WHEN unidades.moneda_venta = 'PEN' THEN precio_base_proforma/3.80
+                ELSE precio_base_proforma
+            END AS precio_base_proforma_$
 
             CASE
                 WHEN unidades.estado_comercial = 'disponible' THEN 0
@@ -186,11 +188,9 @@ FROM (
             END AS precio_venta_$,
 
             
-            (1+1) AS precio_lista_registrado,
+            (NULL) AS precio_lista_registrado
 
-            (precio_lista * 0.95) AS descuento_maximo_ejecutivo
             
-    
 FROM desarrolladora.unidades
 
 ) AS Tabu
