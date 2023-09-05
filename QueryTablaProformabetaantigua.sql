@@ -535,8 +535,6 @@ RIGHT JOIN (
   AND TabProcesos.codigo_unidad = TabProforma_unidad.codigo_unidad 
   AND TabProcesos.codigo_proforma = TabProforma_unidad.codigo_proforma
   AND TabProcesos.tipo_unidad_principal = TabProforma_unidad.tipo_unidad
--- aca hacer la logica
-  AND TabProcesos.codigo_proforma IS NULL
 
 LEFT JOIN (
     --Obtengo de la tabla unidades los campos de la tabla unidades.

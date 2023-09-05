@@ -254,9 +254,13 @@ LEFT JOIN (
            procesos.codigo_proyecto,
            procesos.codigo_unidad,
            procesos.codigo_proforma,
-           MAX(total_pagado) AS total_pagado
+           --Convertir a dolares por el campo moneda
+            CASE
+                WHEN procesos.moneda = 'PEN' THEN MAX(total_pagado) / 3.80
+                ELSE MAX(total_pagado)
+            END AS total_pagado
     FROM desarrolladora.procesos
-    GROUP BY procesos.codigo_proyecto, procesos.codigo_unidad, procesos.codigo_proforma
+    GROUP BY procesos.codigo_proyecto, procesos.codigo_unidad, procesos.codigo_proforma,procesos.moneda
 ) AS ultimo_total_pagado 
 ON PivotTable.codigo_proyecto = ultimo_total_pagado.codigo_proyecto
 AND PivotTable.codigo_unidad = ultimo_total_pagado.codigo_unidad
@@ -267,9 +271,12 @@ LEFT JOIN (
            procesos.codigo_proyecto,
            procesos.codigo_unidad,
            procesos.codigo_proforma,
-           MAX(total_pendiente) AS total_pendiente
+           CASE
+                WHEN procesos.moneda = 'PEN' THEN MAX(total_pendiente) / 3.80
+                ELSE MAX(total_pendiente)
+           END AS total_pendiente
     FROM desarrolladora.procesos
-    GROUP BY procesos.codigo_proyecto, procesos.codigo_unidad, procesos.codigo_proforma
+    GROUP BY procesos.codigo_proyecto, procesos.codigo_unidad, procesos.codigo_proforma,procesos.moneda
 ) AS ultimo_total_pendiente 
 
 ON PivotTable.codigo_proyecto = ultimo_total_pendiente.codigo_proyecto
@@ -359,6 +366,7 @@ FROM (
     FROM desarrolladora.procesos
     ) as tabprueba2
 ) AS subconsulta
+
 INNER JOIN (
     SELECT 
         codigo_proyecto,
@@ -593,7 +601,7 @@ LEFT JOIN (
 
 ) AS TabProcesos
 
-INNER JOIN ( 
+LEFT JOIN ( 
     SELECT  
             proforma_unidad.codigo_proyecto,
             proforma_unidad.codigo_unidad,
@@ -602,7 +610,8 @@ INNER JOIN (
             proforma_unidad.nombre_unidad,
             proforma_unidad.estado as [estado_proforma]
     FROM desarrolladora.proforma_unidad
-    WHERE proforma_unidad.estado = 'en proceso' or proforma_unidad.estado = 'vigente'
+    WHERE proforma_unidad.estado = 'en proceso' 
+    --or proforma_unidad.estado = 'vigente'
 ) AS TabProforma_unidad
   ON  TabProcesos.codigo_proyecto = TabProforma_unidad.codigo_proyecto 
   AND TabProcesos.codigo_unidad = TabProforma_unidad.codigo_unidad 

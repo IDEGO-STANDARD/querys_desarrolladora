@@ -59,7 +59,9 @@ SELECT
         WHEN unidades_1_velocidad_venta IS NULL THEN 0
         ELSE FLOOR(unidades_1_velocidad_venta * 1.0 / (EXTRACT(MONTH FROM GETDATE()) - 1))
     END AS velocidad_venta,
-    tabnumprof.numero_clientes_proformados
+    tabnumprof.numero_clientes_proformados,
+
+    (m2_vendidos + m2_disponible) AS m2_totales
 
 FROM desarrolladora.proyectos
 
