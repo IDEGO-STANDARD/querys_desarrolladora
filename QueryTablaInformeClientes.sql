@@ -71,13 +71,37 @@ SELECT
         TabProcesos.dias_escriturapublica,
         TabProcesos.diferencia_dias_entre_venta_escriturapublica,
         TabProcesos.monto_programado_sumado,
+        TabProcesos.documento_copropietarios,
         TabProforma_unidad.nombre_unidad,
         TabProforma_unidad.estado_proforma,
         TabUnidades.area_libre,
         TabUnidades.area_techada,
         TabUnidades.precio_lista,
         TabUnidades.precio_m2,
-        TabUnidades.estado_comercial
+        TabUnidades.estado_comercial,
+        TabClientes.nombres,
+        TabClientes.apellidos,
+        TabClientes.tipo_documento,
+        TabClientes.documento,
+        TabClientes.genero,
+        TabClientes.estado_civil,
+        TabClientes.email,
+        TabClientes.telefono,
+        TabClientes.celulares,
+        TabClientes.fecha_nacimiento,
+        TabClientes.nacionalidad,
+        TabClientes.pais,
+        TabClientes.departamento,
+        TabClientes.provincia,
+        TabClientes.distrito,
+        TabClientes.direccion,
+        TabClientes.apto,
+        TabClientes.observacion,
+        TabClientes.ocupacion,
+        TabClientes.documento_conyuge,
+        TabClientes.estado,
+        TabClientes.rango_edad
+
 FROM (
 
     SELECT 
@@ -100,7 +124,7 @@ FROM (
         TabL.total_pagado,
         TabL.total_pendiente,
 
-
+        TabL.documento_copropietarios,
 
 
         TabL.fecha_reserva, 
@@ -139,6 +163,8 @@ SELECT
 
     TabPivot.total_pagado,
     TabPivot.total_pendiente,
+
+    TabPivot.documento_copropietarios,
 
     fecha_reserva, 
     fecha_aprobacion, 
@@ -189,6 +215,7 @@ SELECT
 
     --PivotTable.total_pagado,
     --PivotTable.total_pendiente,
+    PivotTable.documento_copropietarios,
 
     DATEPART(day, Venta) AS dias_venta,
     DATEPART(day, EscrituraPública) AS dias_escriturapublica,
@@ -222,7 +249,7 @@ FROM (
 
         --procesos.total_pagado,
         --procesos.total_pendiente,
-
+        procesos.documento_copropietarios,
         procesos.fecha_fin,
         procesos.fecha_inicio,
         procesos.fecha_anulacion,
@@ -421,7 +448,7 @@ INNER JOIN (
                     procesos.fecha_inicio,
                     procesos.fecha_actualizacion            
             FROM desarrolladora.procesos
-            WHERE procesos.fecha_fin IS NOT NULL AND procesos.fecha_inicio IS NOT NULL
+            --WHERE procesos.fecha_fin IS NOT NULL AND procesos.fecha_inicio IS NOT NULL
         ) as tabprueba
     ) AS subconsulta_flujo 
     GROUP BY codigo_proyecto, codigo_proforma
@@ -570,7 +597,7 @@ LEFT JOIN (
                         procesos.fecha_inicio,
                         procesos.fecha_actualizacion            
                 FROM desarrolladora.procesos
-                WHERE procesos.fecha_fin IS NULL AND procesos.fecha_inicio IS NOT NULL
+                --WHERE procesos.fecha_fin IS NULL AND procesos.fecha_inicio IS NOT NULL
             ) as tabprueba
         ) AS subconsulta_flujo 
         GROUP BY codigo_proyecto, codigo_proforma
@@ -641,3 +668,39 @@ ON TabProcesos.codigo_proyecto = TabUnidades.codigo_proyecto
 AND TabProcesos.codigo_unidad = TabUnidades.codigo
 AND TabProcesos.codigo_proforma = TabUnidades.codigo_proforma
 AND TabProcesos.tipo_unidad_principal = TabUnidades.tipo_unidad
+
+
+LEFT JOIN (
+
+    SELECT 
+            clientes.nombres,
+            clientes.apellidos,
+            clientes.tipo_documento,
+            clientes.documento,
+            clientes.genero,
+            clientes.estado_civil,
+            clientes.email,
+            clientes.telefono,
+            clientes.celulares,
+            clientes.fecha_nacimiento,
+            clientes.nacionalidad,
+            clientes.pais,
+            clientes.departamento,
+            clientes.provincia,
+            clientes.distrito,
+            clientes.direccion,
+            clientes.apto,
+            clientes.observacion,
+            clientes.ocupacion,
+            clientes.documento_conyuge,
+            clientes.estado,
+            clientes.rango_edad,
+            clientes.proyectos_relacionados
+
+
+FROM desarrolladora.clientes
+
+) AS TabClientes
+
+ON TabProcesos.documento_cliente = TabClientes.documento
+AND TabProcesos.codigo_proyecto = TabClientes.proyectos_relacionados

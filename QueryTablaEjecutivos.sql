@@ -1,6 +1,6 @@
 /* 
    Creado por: Nicolas Figueroa Gómez
-   Nombre tabla: NTD_Ejecutivos
+   Nombre tabla: NTD_EjecutivosM
    Objetivo: Tener el codigo y nombre de los ejecutivos 
    Campos modificados: 
    -- codigo_nombre:
