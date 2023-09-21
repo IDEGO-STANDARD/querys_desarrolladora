@@ -419,7 +419,7 @@ INNER JOIN (
                     procesos.fecha_inicio,
                     procesos.fecha_actualizacion            
             FROM desarrolladora.procesos
-            WHERE procesos.fecha_fin IS NOT NULL AND procesos.fecha_inicio IS NOT NULL
+            --WHERE procesos.fecha_fin IS NOT NULL AND procesos.fecha_inicio IS NOT NULL
         ) as tabprueba
     ) AS subconsulta_flujo 
     GROUP BY codigo_proyecto, codigo_proforma
@@ -568,7 +568,7 @@ LEFT JOIN (
                         procesos.fecha_inicio,
                         procesos.fecha_actualizacion            
                 FROM desarrolladora.procesos
-                WHERE procesos.fecha_fin IS NULL AND procesos.fecha_inicio IS NOT NULL
+                --WHERE procesos.fecha_fin IS NULL AND procesos.fecha_inicio IS NOT NULL
             ) as tabprueba
         ) AS subconsulta_flujo 
         GROUP BY codigo_proyecto, codigo_proforma

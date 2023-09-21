@@ -600,7 +600,7 @@ LEFT JOIN (
 
 ) AS TabProcesos
 
-LEFT JOIN ( 
+INNER JOIN ( 
     SELECT  
             proforma_unidad.codigo_proyecto,
             proforma_unidad.codigo_unidad,
@@ -609,7 +609,7 @@ LEFT JOIN (
             proforma_unidad.nombre_unidad,
             proforma_unidad.estado as [estado_proforma]
     FROM desarrolladora.proforma_unidad
-    --WHERE proforma_unidad.estado = 'en proceso' or proforma_unidad.estado = 'vigente'
+    WHERE proforma_unidad.estado = 'en proceso' or proforma_unidad.estado = 'vigente'
 ) AS TabProforma_unidad
   ON  TabProcesos.codigo_proyecto = TabProforma_unidad.codigo_proyecto 
   AND TabProcesos.codigo_unidad = TabProforma_unidad.codigo_unidad 

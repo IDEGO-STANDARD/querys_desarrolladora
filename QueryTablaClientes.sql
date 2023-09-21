@@ -37,6 +37,7 @@ SELECT
         END AS agrupacion_medio_captacion,
         medio_captacion,
         canal_entrada,
+        
         CASE
                 WHEN LOWER(nivel_interes) LIKE '%de baja%' OR  LOWER(nivel_interes) = 'no contesta' THEN 'De Baja'
                 WHEN LOWER(nivel_interes) = 'derivado a ejecutivo' OR LOWER(nivel_interes) = 'en espera' OR LOWER(nivel_interes) = 'evaluando compra'
