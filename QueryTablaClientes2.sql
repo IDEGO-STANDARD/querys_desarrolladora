@@ -1,7 +1,10 @@
 SELECT 
 
         TabProcesos.codigo_proyecto,
-        TabProcesos.codigo_proforma AS codigo_proforma,
+        
+        --TabProcesos.codigo_proforma AS codigo_proforma,
+        TabProforma_unidad.codigo_proforma AS codigo_proforma_proforma,
+
         TabProcesos.codigo_unidad,
         TabProcesos.tipo_unidad_principal,
         --TabProcesos.total_unidades,
@@ -68,9 +71,10 @@ SELECT
         TabProcesos.fecha_entrega, 
         TabProcesos.fecha_anulacion,
 
-        TabProcesos.estado_comercial,
+        --TabProcesos.estado_comercial,
         TabProcesos.fecha_estado_comercial,
 
+        
         TabClientes.nivel_interes,
         --TabProcesos.dias_venta,
         --TabProcesos.dias_escriturapublica,
@@ -137,12 +141,18 @@ SELECT
         TabClientes.anio_ultinteraccion,
         TabClientes.anio_creacion,
 
+        
         CASE
-            WHEN TabProforma_unidad.estado_proforma = 'en proceso' OR TabProforma_unidad.estado_proforma = 'vencido' AND TabProcesos.codigo_proforma IS NOT NULL THEN TabProcesos.estado_comercial
-            WHEN TabProforma_unidad.estado_proforma = 'vencido' AND TabProcesos.codigo_proforma IS NOT NULL THEN TabProcesos.estado_comercial 
-            WHEN TabProforma_unidad.estado_proforma = 'vencido' AND TabProcesos.codigo_proforma IS NULL THEN 'Proformado'
-            ELSE 'vigente'
-        END AS estado_comercial_2
+            WHEN TabProcesos.codigo_proforma IS NOT NULL THEN TabProcesos.estado_comercial
+            WHEN TabProforma_unidad.codigo_proforma IS NOT NULL AND TabProcesos.codigo_proforma IS NULL THEN 'Proformado'
+            WHEN TabProforma_unidad.codigo_proforma IS NULL THEN 'No proformado'
+            ELSE 'No proformado'
+        END AS estado_comercial,
+
+        TabProforma_unidad.estado_proforma
+
+        --TabProforma_unidad.codigo_proforma as codigo_proforma_proforma,
+        --TabProcesos.codigo_proforma as codigo_proforma_procesos
 
 FROM (
 
@@ -182,8 +192,8 @@ FROM (
 
         TabL.dias_venta,
         TabL.dias_escriturapublica,
-        TabL.diferencia_dias_entre_venta_escriturapublica,
-        TabR.monto_programado_sumado
+        TabL.diferencia_dias_entre_venta_escriturapublica
+        --TabR.monto_programado_sumado
 
 FROM (
 
@@ -661,6 +671,8 @@ AND TabPivot.codigo_proforma = Tab3.codigo_proforma
 
 ) AS TabL
 
+/*
+
 LEFT JOIN (
     SELECT 
         codigo_proyecto,
@@ -674,8 +686,12 @@ LEFT JOIN (
         ) as TabR
         ON    TabL.codigo_proyecto = TabR.codigo_proyecto
         AND   TabL.codigo_proforma = TabR.codigo_proforma
+*/
 
 ) AS TabProcesos
+
+
+
 
 RIGHT JOIN ( 
     SELECT  
