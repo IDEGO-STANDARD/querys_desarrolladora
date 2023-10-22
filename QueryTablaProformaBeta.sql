@@ -81,7 +81,7 @@ SELECT
         TabProcesos.dias_venta, --No
         TabProcesos.dias_escriturapublica, --No
         TabProcesos.diferencia_dias_entre_venta_escriturapublica, --No
-        TabProcesos.motivo_anulacion, --No
+        --TabProcesos.motivo_anulacion, --No
         TabProcesos.monto_programado_sumado, --No
 
         TabProforma_unidad.nombre_unidad, --Si
@@ -139,7 +139,7 @@ FROM (
         TabL.dias_venta,
         TabL.dias_escriturapublica,
         TabL.diferencia_dias_entre_venta_escriturapublica,
-        TabL.motivo_anulacion,
+        --TabL.motivo_anulacion,
         TabR.monto_programado_sumado
 
 FROM (
@@ -179,7 +179,7 @@ SELECT
     dias_venta,
     dias_escriturapublica,
     diferencia_dias_entre_venta_escriturapublica,
-    TabPivot.motivo_anulacion,
+    --TabPivot.motivo_anulacion,
     Tab2.nombre_flujo_ultimo_estado,
     Tab2.fecha_ultimo_estado
 FROM (
@@ -222,8 +222,8 @@ SELECT
             WHEN ( fecha_venta::date - EscrituraPública::date ) < 0 THEN ( fecha_venta::date - EscrituraPública::date ) * -1
             WHEN  fecha_venta::date IS NULL OR EscrituraPública::date IS NULL THEN 0
             ELSE (fecha_venta::date - EscrituraPública::date)
-    END AS diferencia_dias_entre_venta_escriturapublica,
-    PivotTable.motivo_anulacion
+    END AS diferencia_dias_entre_venta_escriturapublica
+    --PivotTable.motivo_anulacion
     
     --(fecha_venta::date - EscrituraPública::date) as DiferenciaFechaPrueba
 

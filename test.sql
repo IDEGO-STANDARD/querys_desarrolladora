@@ -77,7 +77,20 @@ SELECT
         TabUnidades.area_techada,
         TabUnidades.precio_lista,
         TabUnidades.precio_m2,
-        TabUnidades.estado_comercial
+        TabUnidades.estado_comercial,
+
+        CASE
+            WHEN TabUnidades.estado_comercial = 'proceso de separación' OR TabUnidades.estado_comercial = 'proceso de aprobación'
+            OR TabUnidades.estado_comercial = 'proceso de venta' THEN 'separado'
+            WHEN TabUnidades.estado_comercial = 'separado' THEN 'contrato separación'
+            WHEN TabUnidades.estado_comercial = 'proceso de entrega' OR TabUnidades.estado_comercial = 'vendido' THEN 'venta'
+            WHEN TabUnidades.estado_comercial = 'entregado'  THEN 'entregado'
+           
+            ELSE TabUnidades.estado_comercial
+
+        END AS est_venta
+
+
 FROM (
 
     SELECT 
@@ -266,6 +279,7 @@ ON PivotTable.codigo_proyecto = ultimo_total_pagado.codigo_proyecto
 AND PivotTable.codigo_unidad = ultimo_total_pagado.codigo_unidad
 AND PivotTable.codigo_proforma = ultimo_total_pagado.codigo_proforma
 
+
 LEFT JOIN (
     SELECT 
            procesos.codigo_proyecto,
@@ -419,7 +433,7 @@ INNER JOIN (
                     procesos.fecha_inicio,
                     procesos.fecha_actualizacion            
             FROM desarrolladora.procesos
-            WHERE procesos.fecha_fin IS NOT NULL AND procesos.fecha_inicio IS NOT NULL
+            --WHERE procesos.fecha_fin IS NOT NULL AND procesos.fecha_inicio IS NOT NULL
         ) as tabprueba
     ) AS subconsulta_flujo 
     GROUP BY codigo_proyecto, codigo_proforma
@@ -568,7 +582,7 @@ LEFT JOIN (
                         procesos.fecha_inicio,
                         procesos.fecha_actualizacion            
                 FROM desarrolladora.procesos
-                WHERE procesos.fecha_fin IS NULL AND procesos.fecha_inicio IS NOT NULL
+                --WHERE procesos.fecha_fin IS NULL AND procesos.fecha_inicio IS NOT NULL
             ) as tabprueba
         ) AS subconsulta_flujo 
         GROUP BY codigo_proyecto, codigo_proforma
@@ -600,7 +614,7 @@ LEFT JOIN (
 
 ) AS TabProcesos
 
-LEFT JOIN ( 
+INNER JOIN ( 
     SELECT  
             proforma_unidad.codigo_proyecto,
             proforma_unidad.codigo_unidad,
@@ -615,7 +629,8 @@ LEFT JOIN (
   AND TabProcesos.codigo_unidad = TabProforma_unidad.codigo_unidad 
   AND TabProcesos.codigo_proforma = TabProforma_unidad.codigo_proforma
   AND TabProcesos.tipo_unidad_principal = TabProforma_unidad.tipo_unidad
-
+  
+  
 LEFT JOIN (
 
     SELECT 
@@ -638,3 +653,5 @@ ON TabProcesos.codigo_proyecto = TabUnidades.codigo_proyecto
 AND TabProcesos.codigo_unidad = TabUnidades.codigo
 AND TabProcesos.codigo_proforma = TabUnidades.codigo_proforma
 AND TabProcesos.tipo_unidad_principal = TabUnidades.tipo_unidad
+
+WHERE TabProcesos.nombre_flujo_ultimo_estado NOT IN ('Anulacion', 'Reserva')
